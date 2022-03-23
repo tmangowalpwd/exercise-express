@@ -1,9 +1,12 @@
 const express = require("express")
 const app = express();
+const dotenv = require("dotenv")
+
+dotenv.config();
 
 app.use(express.json())
 
-const PORT = 2000
+const PORT = process.env.PORT
 
 const { employeeRoutes, authRoutes } = require("./routes");
 
