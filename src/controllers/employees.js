@@ -1,4 +1,5 @@
 const { employeeDB } = require("../database")
+const { nanoid } = require("nanoid")
 
 const employeeControllers = {
   getAllEmployees: (req, res) => {
