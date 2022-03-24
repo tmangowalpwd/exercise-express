@@ -2,18 +2,16 @@ const express = require("express")
 const app = express();
 const dotenv = require("dotenv")
 const cors = require("cors")
+const moment = require("moment")
+
+// CORS = Cross Origin Resource Sharing
 
 dotenv.config();
 
 app.use(cors())
-app.use(express.json())
+app.use(express.json()) // stop dulu di sini
 app.use((req, res, next) => {
-  console.log("Request masuk")
-  next()
-  // return res.send("middleware")
-})
-app.use((req, res, next) => {
-  console.log("Middleware 2")
+  console.log(`TIME: ${moment().format("hh:mm DD/MM/YYYY")}`)
   next()
 })
 
