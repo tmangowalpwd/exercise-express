@@ -104,6 +104,8 @@ const employeeControllers = {
   deleteEmployeeById: (req, res) => {
     const employeeId = req.params.id
 
+    console.log(req.query)
+
     const findIndex = employeeDB.findIndex(val => {
       return val.id == employeeId
     })
@@ -119,6 +121,55 @@ const employeeControllers = {
 
     res.status(200).json({
       message: "Deleted employee"
+    })
+  },
+  deleteMultipleEmployeesById: (req, res) => {
+    const employeeIds = req.query.ids
+
+    // console.log(employeeIds.split(","))
+    // console.log(employeeIds)
+
+    for (let i = 0; i < employeeIds.length; i++) {
+      const currentEmployeeId = employeeIds[i]
+
+      const findIndex = employeeDB.findIndex((employee) => {
+        return employee.id == currentEmployeeId
+      })
+
+      if (findIndex == -1) {
+        continue
+      }
+
+      employeeDB.splice(findIndex, 1)
+    }
+
+    res.status(200).json({
+      message: "Employees deleted"
+    })
+  },
+  editMultipleEmployees: (req, res) => {
+    const employeeIds = req.query.ids
+    const editEmployeeData = req.body
+
+    for (let i = 0; i < employeeIds.length; i++) {
+      const currentEmployeeId = employeeIds[i]
+
+      const findIndex = employeeDB.findIndex((employee) => {
+        return employee.id == currentEmployeeId
+      })
+
+      if (findIndex == -1) {
+        continue
+      }
+
+      employeeDB[findIndex] = {
+        ...employeeDB[findIndex],
+        ...editEmployeeData
+      }
+    }
+
+    res.status(200).json({
+      message: "Employees edited"
     })
   }
 }
